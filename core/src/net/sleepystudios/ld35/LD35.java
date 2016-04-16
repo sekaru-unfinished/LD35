@@ -1,7 +1,10 @@
 package net.sleepystudios.ld35;
 
+import java.util.Random;
+
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -41,6 +44,12 @@ public class LD35 extends ApplicationAdapter implements InputProcessor {
 
 		batch.end();
 		
+		if(showHitboxes) renderHitboxes();
+		
+		update();
+	}
+	
+	private void renderHitboxes() {
 		sr.setProjectionMatrix(mh.camera.combined);
 		sr.begin(ShapeType.Line);
 		
@@ -53,7 +62,6 @@ public class LD35 extends ApplicationAdapter implements InputProcessor {
 		sr.rect(player.x, player.y, player.getWidth(), player.getHeight());
 		
 		sr.end();
-		update();
 	}
 	
 	private void update() {
@@ -65,8 +73,17 @@ public class LD35 extends ApplicationAdapter implements InputProcessor {
 		return false;
 	}
 
+	private boolean showHitboxes;
 	@Override
 	public boolean keyUp(int keycode) {
+		if(keycode==Input.Keys.B) showHitboxes = !showHitboxes;
+		
+		if(keycode==Input.Keys.NUM_1) {
+			player.transform(0);
+		} else if(keycode==Input.Keys.NUM_2) {
+			player.transform(1);
+		}
+		
 		return false;
 	}
 
@@ -107,4 +124,31 @@ public class LD35 extends ApplicationAdapter implements InputProcessor {
 		return false;
 	}
 	
+	// generates a random number
+    public static int rand(int min, int max) {
+        return min + (int) (Math.random() * ((max - min) + 1));
+    }
+    public static float rand(float min, float max) {
+        return min + new Random().nextFloat() * (max - min);
+    }
+
+    // random number that cannot be 0
+    public static int randNoZero(int min, int max) {
+        int r = rand(min, max);
+
+        if (r != 0) {
+            return r;
+        } else {
+            return randNoZero(min, max);
+        }
+    }
+    public static float randNoZero(float min, float max) {
+        float r = rand(min, max);
+
+        if (r != 0) {
+            return r;
+        } else {
+            return randNoZero(min, max);
+        }
+    }
 }
