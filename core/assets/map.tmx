@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="52" height="30" tilewidth="20" tileheight="20" nextobjectid="7">
+ <tileset firstgid="1" name="tileset" tilewidth="20" tileheight="20" tilecount="24" columns="4">
+  <image source="tileset.png" width="80" height="120"/>
+ </tileset>
+ <layer name="Background" width="52" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztw8EJAAAMA6Ej+w/dGfpXcNVUVVVVVVUfD8JsDDE=
+  </data>
+ </layer>
+ <layer name="Details" width="52" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzt10EKwCAMRFE3LbT3P7CbChIMBt046X8QhKwMAQdLAf7r3TwzugOlZHZf1Xm8vSjPE+mfbrQf21fi3dfOc3V1stm7ZvcX9XwFfaPdK2Zfk20eAOtaTvfZp5Ddnix/FQAAMqindgHo
+  </data>
+ </layer>
+ <layer name="Walls" width="52" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztlEsKwCAMROOirnr/87YbQST+4jdhBh6Cto6DiY6InDEkku6vPY//eSL8oTzvxDwptbOMjDPqRpp3tnr27c3DfbcqR+qV8+VqgPu31WdlltiHKO9VW79JuR4s9eYuSXquVk/cuEOSd4S7h5a3s8Uv9e19R0cpKax7RXnAuhqxcr/W8oC7CarNacFqHk6nz4Y8AAAAgG4+iwgFEg==
+  </data>
+ </layer>
+ <objectgroup name="Collision">
+  <object id="1" x="1" y="80" width="219" height="246"/>
+  <object id="2" x="283" y="0" width="35" height="137"/>
+  <object id="3" x="317" y="-1" width="21" height="119"/>
+  <object id="4" x="1" y="-1" width="279" height="20"/>
+  <object id="5" x="2" y="22" width="16" height="58"/>
+ </objectgroup>
+</map>

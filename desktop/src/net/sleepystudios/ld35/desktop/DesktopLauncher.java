@@ -9,7 +9,7 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.title = "LD35";
 		config.resizable = false;
-		config.width = 1064;
+		config.width = 1024;
 		config.height = 600;
 		config.foregroundFPS = 60;
 		
