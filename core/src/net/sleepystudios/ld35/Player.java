@@ -3,7 +3,6 @@ package net.sleepystudios.ld35;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
@@ -11,8 +10,8 @@ import com.badlogic.gdx.math.Rectangle;
 public class Player {
 	private MapHandler mh;
 	
-	private Animation[] anim = new Animation[2];
-	public final int SNAKE = 0, FISH = 1, BIRD = 10;
+	private Animation[] anim = new Animation[3];
+	public final int SNAKE = 0, FISH = 1, FROG = 2, BIRD = 10;
 	public int animIndex;
 	private float tmrAnim, frameTime = 0.1f;
 	
@@ -24,6 +23,7 @@ public class Player {
 		
 		anim[0] = new Animation(frameTime, AnimGenerator.gen("snake.png", 22, 5));
 		anim[1] = new Animation(frameTime, AnimGenerator.gen("fish.png", 12, 8));
+		anim[2] = new Animation(frameTime, AnimGenerator.gen("frog.png", 24, 11));
 		
 		mh.updateCam(x, y);
 	}
@@ -36,7 +36,7 @@ public class Player {
 		update();
 	}
 	
-	private int SPEED[] = new int[] {100, 20};
+	private int SPEED[] = new int[] {100, 20, 200};
 	private float speed;
 	
 	private boolean jumping, falling;

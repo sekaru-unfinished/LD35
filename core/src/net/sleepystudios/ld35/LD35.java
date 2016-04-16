@@ -82,6 +82,8 @@ public class LD35 extends ApplicationAdapter implements InputProcessor {
 			player.transform(0);
 		} else if(keycode==Input.Keys.NUM_2) {
 			player.transform(1);
+		} else if(keycode==Input.Keys.NUM_3) {
+			player.transform(2);
 		}
 		
 		return false;
