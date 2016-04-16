@@ -45,45 +45,22 @@ public class Player {
 	public void update() {
 		float delta = Gdx.graphics.getDeltaTime();
 		
-		// animation
-		if(isMoving() || ((jumping || falling) && animIndex==FISH)) tmrAnim+=delta;
-		
 		// speed
 		speed = SPEED[animIndex] * (delta);
 		
-		// bird y axis
-		if(animIndex==BIRD) {
-			if(Gdx.input.isKeyPressed(Input.Keys.W) || Gdx.input.isKeyPressed(Input.Keys.UP)) {
-				if(!isBlocked(x, y+speed)) move(x, y+speed);
-	        }
-			if(Gdx.input.isKeyPressed(Input.Keys.S) || Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-	        	if(!isBlocked(x, y-speed)) move(x, y-speed);
-	        }
+		// update
+		switch(animIndex) {
+		case SNAKE:
+			updateSnake(delta);
+			break;
+		case FISH:
+			updateFish(delta);
+			break;
+		case FROG:
+			updateFrog(delta);
+			break;
 		}
 		
-		// left
-        if(Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-        	dir = 1;
-        	if(!isBlocked(x-speed, y)) move(x-speed, y);
-        }
-        
-        // right
-        if(Gdx.input.isKeyPressed(Input.Keys.D) || Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-        	dir = 0;
-        	if(!isBlocked(x+speed, y)) move(x+speed, y);
-        }
-        
-        // normal jumping
-        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && !jumping && !falling) {
-        	jumping = true;
-        	yVel = startVel;
-        }
-        // fish jumping
-        if(animIndex==FISH && !jumping && !falling && yVel==0) {
-        	jumping = true;
-        	yVel = LD35.rand(1f, 3f);
-        }
-        
         // jumping
         if(jumping) {
         	yVel -= airResistance;
@@ -106,15 +83,98 @@ public class Player {
         
         // general gravity
         if(!falling && !jumping) {
-        	yVel += 0.1f;
         	if(!isBlocked(x, y-yVel)) {
         		move(x, y-yVel);
-        	} else if(!isBlocked(x, y-0.1f)) {
-        		move(x, y-0.1f);
+        		yVel += 0.1f;
         	} else {
-        		yVel = 0;
+        		yVel = 0.1f;
         	}
         }
+	}
+	
+	private void updateSnake(float delta) {
+		if(isMoving()) tmrAnim+=delta;
+		
+		// left
+        if(Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+        	dir = 1;
+        	if(!isBlocked(x-speed, y)) move(x-speed, y);
+        }
+        
+        // right
+        if(Gdx.input.isKeyPressed(Input.Keys.D) || Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+        	dir = 0;
+        	if(!isBlocked(x+speed, y)) move(x+speed, y);
+        }
+        
+        // normal jumping
+        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && !jumping && !falling) {
+        	jumping = true;
+        	yVel = startVel;
+        }
+	}
+	
+	private void updateFish(float delta) {
+		tmrAnim+=delta;
+		
+		// left
+        if(Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+        	dir = 1;
+        	if(!isBlocked(x-speed, y)) move(x-speed, y);
+        }
+        
+        // right
+        if(Gdx.input.isKeyPressed(Input.Keys.D) || Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+        	dir = 0;
+        	if(!isBlocked(x+speed, y)) move(x+speed, y);
+        }
+        
+        // fish jumping
+        if(!jumping && !falling && yVel==0) {
+        	jumping = true;
+        	yVel = LD35.rand(1f, 3f);
+        }
+	}
+	
+	private void updateFrog(float delta) {
+		//tmrAnim+=delta;
+	}
+	
+	private void updateBear(float delta) {
+		tmrAnim+=delta;
+		
+		// left
+        if(Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+        	dir = 1;
+        	if(!isBlocked(x-speed, y)) move(x-speed, y);
+        }
+        
+        // right
+        if(Gdx.input.isKeyPressed(Input.Keys.D) || Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+        	dir = 0;
+        	if(!isBlocked(x+speed, y)) move(x+speed, y);
+        }
+        
+        // normal jumping
+        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && !jumping && !falling) {
+        	jumping = true;
+        	yVel = startVel;
+        }
+	}
+	
+	private void updateBird(float delta) {
+		// animation
+		tmrAnim+=delta;
+		
+		// bird y axis
+		if(animIndex==BIRD) {
+			if(Gdx.input.isKeyPressed(Input.Keys.W) || Gdx.input.isKeyPressed(Input.Keys.UP)) {
+				if(!isBlocked(x, y+speed)) move(x, y+speed);
+	        }
+			if(Gdx.input.isKeyPressed(Input.Keys.S) || Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+	        	if(!isBlocked(x, y-speed)) move(x, y-speed);
+	        }
+		}
 	}
 	
 	public void transform(int animIndex) {
@@ -126,7 +186,7 @@ public class Player {
 		this.x = x;
 		this.y = y;
 		
-		mh.updateCam(x, y);
+		if(animIndex!=FISH) mh.updateCam(x, y);
 	}
 	
 	private boolean isMoving() {
