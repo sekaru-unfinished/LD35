@@ -132,7 +132,7 @@ public class Player {
         
         // fish jumping
         tmrFish+=delta;
-        if(tmrFish>=0.75) {
+        if(tmrFish>=1f) {
 	        if(!jumping && !falling) {
 	        	jumping = true;
 	        	yVel = LD35.rand(2f, 4f);
@@ -143,6 +143,16 @@ public class Player {
 	
 	private void updateFrog(float delta) {
 		//tmrAnim+=delta;
+		
+		// left
+        if(Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+        	dir = 1;
+        }
+        
+        // right
+        if(Gdx.input.isKeyPressed(Input.Keys.D) || Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+        	dir = 0;
+        }
 	}
 	
 	private void updateBear(float delta) {
@@ -186,7 +196,7 @@ public class Player {
 		this.animIndex = animIndex;
 		tmrAnim = 0;
 		
-		if(animIndex==FISH) tmrFish = 0.75f;
+		if(animIndex==FISH) tmrFish = 1f;
 	}
 	
 	private void move(float x, float y) {
