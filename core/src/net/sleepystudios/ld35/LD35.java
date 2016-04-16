@@ -65,7 +65,7 @@ public class LD35 extends ApplicationAdapter implements InputProcessor {
 	}
 	
 	private void update() {
-		float delta = Gdx.graphics.getDeltaTime()*1000f;
+		//float delta = Gdx.graphics.getDeltaTime()*1000f;
 	}
 
 	@Override

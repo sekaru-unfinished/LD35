@@ -11,7 +11,7 @@ public class Player {
 	private MapHandler mh;
 	
 	private Animation[] anim = new Animation[3];
-	public final int SNAKE = 0, FISH = 1, FROG = 2, BIRD = 10;
+	public final int SNAKE = 0, FISH = 1, FROG = 2, BEAR = 3, BIRD = 4;
 	public int animIndex;
 	private float tmrAnim, frameTime = 0.1f;
 	
@@ -59,6 +59,11 @@ public class Player {
 		case FROG:
 			updateFrog(delta);
 			break;
+		case BEAR:
+			updateBear(delta);
+			break;
+		case BIRD:
+			updateBird(delta);
 		}
 		
         // jumping
@@ -85,7 +90,7 @@ public class Player {
         if(!falling && !jumping) {
         	if(!isBlocked(x, y-yVel)) {
         		move(x, y-yVel);
-        		yVel += 0.2f;
+        		yVel += airResistance;
         	} else {
         		yVel = 0f;
         	}
@@ -142,8 +147,6 @@ public class Player {
 	}
 	
 	private void updateFrog(float delta) {
-		//tmrAnim+=delta;
-		
 		// left
         if(Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
         	dir = 1;
@@ -182,14 +185,24 @@ public class Player {
 		tmrAnim+=delta;
 		
 		// bird y axis
-		if(animIndex==BIRD) {
-			if(Gdx.input.isKeyPressed(Input.Keys.W) || Gdx.input.isKeyPressed(Input.Keys.UP)) {
-				if(!isBlocked(x, y+speed)) move(x, y+speed);
-	        }
-			if(Gdx.input.isKeyPressed(Input.Keys.S) || Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-	        	if(!isBlocked(x, y-speed)) move(x, y-speed);
-	        }
-		}
+		if(Gdx.input.isKeyPressed(Input.Keys.W) || Gdx.input.isKeyPressed(Input.Keys.UP)) {
+			if(!isBlocked(x, y+speed)) move(x, y+speed);
+        }
+		if(Gdx.input.isKeyPressed(Input.Keys.S) || Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+        	if(!isBlocked(x, y-speed)) move(x, y-speed);
+        }
+
+		// left
+        if(Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+        	dir = 1;
+        	if(!isBlocked(x-speed, y)) move(x-speed, y);
+        }
+        
+        // right
+        if(Gdx.input.isKeyPressed(Input.Keys.D) || Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+        	dir = 0;
+        	if(!isBlocked(x+speed, y)) move(x+speed, y);
+        }
 	}
 	
 	public void transform(int animIndex) {
