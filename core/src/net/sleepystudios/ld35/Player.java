@@ -85,9 +85,9 @@ public class Player {
         if(!falling && !jumping) {
         	if(!isBlocked(x, y-yVel)) {
         		move(x, y-yVel);
-        		yVel += 0.1f;
+        		yVel += 0.2f;
         	} else {
-        		yVel = 0.1f;
+        		yVel = 0f;
         	}
         }
 	}
@@ -114,6 +114,7 @@ public class Player {
         }
 	}
 	
+	private float tmrFish;
 	private void updateFish(float delta) {
 		tmrAnim+=delta;
 		
@@ -130,9 +131,13 @@ public class Player {
         }
         
         // fish jumping
-        if(!jumping && !falling && yVel==0) {
-        	jumping = true;
-        	yVel = LD35.rand(1f, 3f);
+        tmrFish+=delta;
+        if(tmrFish>=0.75) {
+	        if(!jumping && !falling) {
+	        	jumping = true;
+	        	yVel = LD35.rand(2f, 4f);
+	        }
+	        tmrFish = 0;
         }
 	}
 	
@@ -180,13 +185,15 @@ public class Player {
 	public void transform(int animIndex) {
 		this.animIndex = animIndex;
 		tmrAnim = 0;
+		
+		if(animIndex==FISH) tmrFish = 0.75f;
 	}
 	
 	private void move(float x, float y) {
 		this.x = x;
 		this.y = y;
 		
-		if(animIndex!=FISH) mh.updateCam(x, y);
+		mh.updateCam(x, y);
 	}
 	
 	private boolean isMoving() {
