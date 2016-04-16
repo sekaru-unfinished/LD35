@@ -16,7 +16,25 @@
 	</natures>
 	<filteredResources>
 		<filter>
-			<id>1460752114583</id>
+			<id>1460782296385</id>
+			<name></name>
+			<type>26</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-projectRelativePath-matches-false-false-core</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1460782296409</id>
+			<name></name>
+			<type>26</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-projectRelativePath-matches-false-false-desktop</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1460782296420</id>
 			<name></name>
 			<type>26</type>
 			<matcher>
@@ -25,7 +43,7 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1460752114675</id>
+			<id>1460782296429</id>
 			<name></name>
 			<type>26</type>
 			<matcher>
