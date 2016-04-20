@@ -40,7 +40,7 @@ public class Player {
 	private float speed;
 	
 	private boolean jumping, falling;
-	private float yVel;
+	public float xVel, yVel;
 	private float startVel = 2f, airResistance = 0.2f, gravityPull = 0.1f;
 	public void update() {
 		float delta = Gdx.graphics.getDeltaTime();
@@ -140,21 +140,80 @@ public class Player {
         if(tmrFish>=1f) {
 	        if(!jumping && !falling) {
 	        	jumping = true;
-	        	yVel = LD35.rand(2f, 4f);
+	        	yVel = LD35.rand(2f, 5f);
 	        }
 	        tmrFish = 0;
         }
 	}
 	
 	private void updateFrog(float delta) {
+		float maxX = 6f;
+		float increase = 0.1f, yIncrease = 0.01f;
+		float xDecrease = 0.075f, yDecrease = 1f;
+		
 		// left
         if(Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
         	dir = 1;
+        	if(xVel<maxX) {
+        		xVel+=increase;
+        		yVel+=yIncrease;
+        	}
         }
         
         // right
         if(Gdx.input.isKeyPressed(Input.Keys.D) || Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
         	dir = 0;
+        	if(xVel<maxX) {
+        		xVel+=increase;
+        		yVel+=yIncrease;
+        	}
+        }
+        
+        // on-release
+        if(!(Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.D) || Gdx.input.isKeyPressed(Input.Keys.RIGHT))) {
+        	if(xVel>=2f) {
+        		tmrAnim = 0.1f;
+        		if(dir==0) {
+        			if(!isBlocked(x+xVel, y)) {
+        				move(x+xVel, y);
+        			} else {
+        				xVel-=xDecrease;
+        			}
+        		} else {
+        			if(!isBlocked(x-xVel, y)) {
+        				move(x-xVel, y);
+        			} else {
+        				xVel-=xDecrease;
+        			}
+        		}
+        		jumping = true;
+        	} else {
+        		if(jumping) {
+        			yVel-=yDecrease;
+        		} else if(falling) {
+        			yVel+=increase;
+        		}
+        		tmrAnim = 0f;
+        		
+        		if(xVel>0.05f && (jumping || falling)) {
+        			if(dir==0) {
+            			if(!isBlocked(x+xVel, y)) {
+            				move(x+xVel, y);
+            			} else {
+            				xVel-=xDecrease;
+            			}
+            		} else {
+            			if(!isBlocked(x-xVel, y)) {
+            				move(x-xVel, y);
+            			} else {
+            				xVel-=xDecrease;
+            			}
+            		}
+        		}
+        	}
+        	
+        	xVel-=xDecrease;
+        	if(xVel<0) xVel = 0;
         }
 	}
 	

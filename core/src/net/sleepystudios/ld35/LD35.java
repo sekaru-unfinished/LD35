@@ -8,24 +8,29 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 
 public class LD35 extends ApplicationAdapter implements InputProcessor {
-	private SpriteBatch batch;
+	private SpriteBatch batch, guiBatch;
     private MapHandler mh;
     private Player player;
     private ShapeRenderer sr;
+    private BitmapFont font;
     
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
+		guiBatch = new SpriteBatch();
 		mh = new MapHandler(new TmxMapLoader().load("map.tmx"));
 		
 		player = new Player(mh);
 		sr = new ShapeRenderer();
+		
+		font = new BitmapFont();
 		
 		Gdx.input.setInputProcessor(this);
 	}
@@ -45,6 +50,11 @@ public class LD35 extends ApplicationAdapter implements InputProcessor {
 		batch.end();
 		
 		if(showHitboxes) renderHitboxes();
+		
+		guiBatch.begin();
+		//font.draw(guiBatch, "xVel: " + player.xVel, 0, Gdx.graphics.getHeight()-20);
+		//font.draw(guiBatch, "yVel: " + player.yVel, 0, Gdx.graphics.getHeight()-40);
+		guiBatch.end();
 		
 		update();
 	}
@@ -84,6 +94,10 @@ public class LD35 extends ApplicationAdapter implements InputProcessor {
 			player.transform(1);
 		} else if(keycode==Input.Keys.NUM_3) {
 			player.transform(2);
+		}
+		
+		if(keycode==Input.Keys.R) {
+			create();
 		}
 		
 		return false;
